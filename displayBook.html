@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lab 6 - Question 3</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <h2>Search Book Details</h2>
+
+        <label for="selectBook">Select a book:</label>
+        <select id="selectBook">
+            <option value="">--Choose a Book Title --</option>
+        </select>
+
+        <div id="bookDetails" style="display: none;">
+            <p><strong>Title: </strong> <span id="displayTitle"></span></p>
+            <p><strong>Author: </strong> <span id="displayAuthor"></span></p>
+            <p><strong>Publication Year: </strong> <span id="displayPublicationYear"></span></p>
+            <p><strong>Genres: </strong> <span id="displayGenres"></span></p>
+        </div>
+
+        <script>
+            const jsonURL = "https://raw.githubusercontent.com/hlmtlzty/webdev-lab6-json/refs/heads/main/books.json";
+            let booksData = [];
+
+            fetch(jsonURL)
+                .then(response => response.json())
+                .then(data => {
+                    booksData = data.Books;
+
+                    const selectElement = document.getElementById("selectBook");
+                    booksData.forEach(book => {
+                        const option = document.createElement("option");
+                        option.value = book.title;
+                        option.textContent = book.title;
+                        selectElement.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching JSON: ", error));
+
+            document.getElementById("selectBook").addEventListener("change", function() {
+                const selectedTitle = this.value;
+                const detailsDiv = document.getElementById("bookDetails");
+
+                if(!selectedTitle) {
+                    detailsDiv.style.display = "none";
+                    return;
+                }
+
+                const bookFound = booksData.find(book => book.title === selectedTitle);
+
+                if(bookFound) {
+                    document.getElementById("displayTitle").textContent = bookFound.title;
+                    document.getElementById("displayAuthor").textContent = bookFound.author;
+                    document.getElementById("displayPublicationYear").textContent = bookFound.publicationYear;
+                    document.getElementById("displayGenres").textContent = bookFound.genres.join(", ");
+                    detailsDiv.style.display = "block";
+                }
+            });
+        </script>
+    </body>
+</html>
