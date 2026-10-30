@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lab 6 - Activity 2</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <h1>Lab 6 - Activity 2</h1>
+        <p>Please open console.</p>
+
+        <script>
+            const booksJSON = `{
+                "Books":
+                [
+                    {
+                        "title" : "The Great Gatsby",
+                        "author" : "F. Scott Fitzgerald",
+                        "publicationYear" : 1925,
+                        "genres" : ["fiction", "classic"]
+                    },
+                    {
+                        "title" : "To Kill a Mockingbird",
+                        "author" : "Harper Lee",
+                        "publicationYear" : 1960,
+                        "genres" : ["fiction", "coming-of-age"]
+                    }
+                ]
+            }`;
+
+            const booksData = JSON.parse(booksJSON);
+            const books = booksData.Books;
+
+            console.log("Title of the first book: ", books[0].title);
+            console.log("Author of the second book: ", books[1].author);
+            console.log("Genres of all book: ");
+            for (let i = 0; i < books.length; i++) {
+                console.log(books[i].genres.join(", "));
+            };
+        </script>
+    </body>
+</html>
